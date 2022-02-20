@@ -1,0 +1,17 @@
+
+{{ block content }}
+
+	<p>
+		Spieler/in A gibt sowohl für Option 1 als auch für Option 2 Werte an. <b>Eine der beiden Optionen wird zufällig
+		ausgewählt und für Sie und Spieler/in A auszahlungsrelevant umgesetzt.</b><br><br>
+
+		Was denken Sie, wie sich Ihr Gegenüber in den jeweiligen Optionen entscheidet?<br><br>
+
+		{{ formfield 'expected_benignity' label="Option 1: Spieler/in A entscheidet sich dafür, xx (Anzahl) Schieberegler zu positionieren."}}<br><br>
+
+		{{ formfield 'expected_maliciousness' label="Option 2: Spieler/in A entscheidet sich dafür, mir xx € abzuziehen." }}<br><br>
+	</p>
+
+    {{ next_button }}
+
+{{ endblock }}

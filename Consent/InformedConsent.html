@@ -1,0 +1,83 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Teilnehmerinformation
+{% endblock %}
+
+{% block content %}
+    <br>
+        Vielen Dank, dass Sie an der Studie „Entscheidungspräferenzen“ teilnehmen. Ziel dieser Studie ist es, besser zu
+        verstehen, wie sich Persönlichkeitseigenschaften im Verhalten widerspiegeln. Dazu möchten wir Ihnen verschiedene
+        Entscheidungssituationen vorstellen, die finanzielle Auswirkungen haben können. Ausgehend von einem Geldbetrag,
+        den wir Ihnen zur Verfügung stellen, erhalten Sie am Ende des Experiments den Betrag, der sich infolge Ihrer
+        Entscheidungen ergibt. Verantwortlich für die Studie ist Dorothee Mischkowski
+        (<a href="mailto:dorothee.mischkowski@uni-koeln.de" target="_blank">dorothee.mischkowski@uni-koeln.de</a>).<br><br>
+
+        Die Teilnahme an dieser Studie ist freiwillig. Wenn Sie nicht an der Studie teilnehmen oder wenn Sie die Studie
+        abbrechen möchten, können Sie dies jederzeit tun, ohne einen Nachteil zu erleiden. Sie erhalten dann nur eine
+        anteilige Vergütung in Höhe von 2,-€. In diesem Fall schicken Sie bitte einen Screenshot der zuletzt bearbeiteten
+        Seite mit Ihrer Decision Lab ID an <a href="labids-dlc@uni-koeln.de" target="_blank">labids-dlc@uni-koeln.de</a>.<br><br>
+
+        Im Rahmen der Studie werden wir folgende Datenkategorien von Ihnen verarbeiten: Sozio-demographische Daten
+        (Alter, Geschlecht etc.), Ihre Antworten bzw. Entscheidungen sowie der erspielte Geldbetrag. Die Daten sind
+        pseudonymisiert, d.h. unter Verwendung Ihrer Decision Lab ID, ohne Angabe Ihres Namens. Sie geben ausschließlich
+        Ihre Decision Lab ID an. Es existiert eine digitale Kodierliste, die Ihren Namen mit der Decision Lab ID verbindet.
+        Der Code ermöglicht Ihre aktuellen Antworten Ihren Antworten aus früheren Studien zuordnen zu können (insbesondere
+        der ersten Studie nach Ihrer Registrierung, der „Grunderhebung“, bei der Sie mehrere Persönlichkeitsfragebögen
+        beantwortet haben). Ihre Kontaktdaten mit dem Pseudonym (die sogenannte Zuordnungsliste) werden jedoch strikt
+        von den wissenschaftlichen Daten getrennt aufbewahrt und verarbeitet. Personen, die mit der wissenschaftlichen
+        Auswertung von Daten betraut sind, haben keinen Zugang zu der Zuordnungsliste. Personen, die die Zuordnungsliste
+        verwalten, wurden ausdrücklich zur Verschwiegenheit verpflichtet. Zugriff auf die pseudonymisierten
+        wissenschaftlichen Daten haben auch unsere wissenschaftlichen Kooperationspartner von anderen Hochschulen.
+        Durch die Pseudonymisierung ist sichergestellt, dass weder bei der wissenschaftlichen Auswertung, noch bei
+        wissenschaftlichen Veröffentlichungen Ihre Identität bekannt wird. Die Daten werden ausschließlich für
+        Forschungszwecke genutzt und nur für die Auswertung gespeichert. Es sind keine Rückschlüsse auf einzelne
+        Teilnehmende möglich.<br><br>
+
+        Anonymisierte Daten werden zur Gewährung der Transparenz in der Wissenschaft ggf. für eine Nachnutzung durch
+        Dritte zur Verfügung gestellt. Zweck, Art und Umfang dieser Nachnutzung sind zum gegenwärtigen Zeitpunkt noch
+        nicht absehbar. Die Anonymisierung beinhaltet, dass die Decision Lab Cologne ID aus diesem Datensatz gelöscht
+        wird. Damit ist es niemandem mehr möglich, Daten einzelnen Personen zuzuordnen.<br><br>
+
+        Ihr Geldbetrag wird Ihnen ca. 14 Tage nach der Teilnahme überwiesen. Die entsprechenden Kontakt- und Kontodaten
+        werden getrennt von allen anderen genannten Daten verarbeitet und niemals zusammengeführt oder für andere Zwecke
+        verwendet.<br><br>
+
+        Alle in dieser Studie erhobenen Daten werden nach Abschluss der Studie für die Dauer von vier Wochen aufbewahrt
+        und danach anonymisiert. Anonymisieren bedeutet, dass jegliche Möglichkeit auf ihre Identität zu schließen aus
+        den Daten entfernt wird. An dieser Studie können Sie nur teilnehmen, wenn sie mit der Teilnahme und der oben
+        beschriebenen Datenverarbeitung einverstanden sind.<br><br>
+
+        Die für diese Studie zuständige Datenschutzbeauftragte der Universität zu Köln, Gesa Diekmann, können Sie unter
+        <a href="mailto:g.diekmann@verw.uni-koeln.de" target="_blank">g.diekmann@verw.uni-koeln.de</a> erreichen.<br><br>
+
+        Wenn Sie an dieser Studie teilnehmen, haben sie bezüglich Ihrer personenbezogenen Daten folgende Rechte:<br>
+        - Auskunft vom Verantwortlichen über Ihre Daten<br>
+        - Berichtigung Ihrer Daten<br>
+        - Löschung Ihrer Daten<br>
+        - Einschränkung der Verarbeitung Ihrer Daten<br>
+        - Datenübertragbarkeit<br>
+        - Widerspruch gegen die Verarbeitung Ihrer Daten<br><br>
+
+        Sie haben das Recht, die Einwilligung jederzeit zu widerrufen. Der Widerruf wirkt aber nur in der Zukunft.
+        Die auf der Einwilligung beruhende Verarbeitung bis zum Zeitpunkt des Widerrufs bleibt also rechtmäßig.<br><br>
+        Wenn Sie diese Rechte geltend machen wollen, wenden Sie sich bitte an die Studienverantwortliche, Dorothee
+        Mischkowski (<a href="mailto:dorothee.mischkowski@uni-koeln.de" target="_blank">dorothee.mischkowski@uni-koeln.de</a>).
+        Sie haben auch das Recht sich an eine Aufsichtsbehörde zu wenden. Zuständig ist die Landesbeauftragte für
+        Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Postfach 20 04 44, 40102 Düsseldorf (Tel.: 0211/38424-0,
+        E-Mail: <a href="mailto:poststelle@ldi.nrw.de" target="_blank">poststelle@ldi.nrw.de</a>).<br><br>
+    </p>
+    <a href="{% static 'doc/Teilnehmerinformation.pdf' %}" target="_blank">Hier können Sie diese Teilnehmerinformation downloaden.</a>
+
+    <hr>
+        <b><font size="5">Einwilligungserklärung</font></b>
+        <br><br>
+        {{ formfield_errors 'consentGiven' }}
+        {{ formfield 'consentGiven' label="Ich erkläre mich bereit, an der Studie „Entscheidungspräferenzen“ teilzunehmen und bin mit der oben beschriebenen Verarbeitung meiner Daten einverstanden." }}
+        <br><br>
+        <a href="{{ static 'doc/Einwilligungserklaerung.pdf' }}" target="_blank">Einwilligungserklärung downloaden.</a><br>
+    <hr/><br/>
+
+    {{ next_button }}
+{{ endblock }}

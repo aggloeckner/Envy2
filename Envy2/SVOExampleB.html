@@ -1,0 +1,58 @@
+
+{{ block styles }}
+	<style>
+		.svo-value {
+			border: 1px solid black;
+			font-size: x-large;
+			margin-right: 20em;
+			width: 1.5em;
+			text-align: right;
+		}
+		.svo-button {
+			padding-left: 1em;
+			padding-right: 0.5em;
+		}
+	</style>
+{{ endblock }}
+
+{{ block content }}
+	<p>
+		Wir möchten Sie nun bitten, sich auch die folgende Situation vorzustellen. Ihre Entscheidungen sind nicht
+		auszahlungsrelevant.: Stellen Sie sich vor, Sie werden erneut einer anderen Person zugeteilt. <b>Bei dieser
+		Person handelt es sich nicht um dieselbe Person, die Ihnen als Spieler/in A in der vorangegangenen Situation
+		zugeteilt wurde.</b> Im Folgenden wird diese Person als „die andere Person“ bezeichnet. Sie sollen nun
+		Entscheidungen darüber treffen, in welchem Verhältnis Geldbeträge zwischen Ihnen und „der anderen Person“
+		aufgeteilt werden. Alle Ihre Entscheidungen werden absolut vertraulich behandelt.<br><br>
+
+		Bitte markieren Sie in jeder der folgenden Fragen diejenige Aufteilung an Geld, die Sie am ehesten bevorzugen,
+		indem Sie das entsprechende Feld an der Mittellinie markieren. Sie können nur eine Markierung pro Frage
+		vornehmen. Die erste Zahl bezieht sich dabei auf den Betrag, den Sie <b>sich selbst</b> zuteilen würden,
+		während die zweite Zahl den Betrag repräsentiert, den Sie „<b>der anderen Person</b>“ zukommen lassen würden.<br><br>
+
+		Die finanzielle Einheit der gezeigten Beträge ist Cent. In dem unten gezeigten Beispiel hat jemand entschieden,
+		dass er/sie 45 Cent erhält, während die andere, anonyme Person 50 Cent erhält.<br><br>
+
+	</p>
+
+	<table>
+		<tr>
+			<th>Sie erhalten</th>
+			{{ for svoobject in SVO }}
+				<td rowspan="2" class="svo-button">
+					<input type="radio" value="{{ svoobject.0 }}/{{ svoobject.1 }}" {{ if svoobject.2 }} checked {{ else }} disabled {{ endif }}>
+				</td>
+				<td class="svo-value"> {{ svoobject.0 }} </td>
+			{{ endfor }}
+		</tr>
+		<tr>
+			<th>Die andere Person erhält</th>
+			{{ for svoobject in SVO }} <td class="svo-value"> {{ svoobject.1 }} </td> {{ endfor }}
+		</tr>
+	</table>
+
+
+	<hr/><br/>
+
+    {{ next_button }}
+
+{{ endblock }}

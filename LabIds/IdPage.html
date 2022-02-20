@@ -1,0 +1,15 @@
+{{ extends "global/Page.html" }}
+{{ load staticfiles otree }}
+
+
+{{ block content }}
+
+
+	<strong>Bitte geben Sie Ihre Decision Lab ID an:</strong><br>
+	<span>Sollten Sie sich nicht an Ihre Decision Lab ID erinnern, so wenden Sie sich bitte an <a href="mailto:labids-dlc@uni-koeln.de">labids-dlc@uni-koeln.de</a>.</span><br>
+	{{ formfield player.DecisionLabId label="" }}
+	<br><br>
+
+    {% next_button }}
+
+{{ endblock }}

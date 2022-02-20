@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+        <b>Damit ist diese Studie abgeschlossen. Vielen Dank für Ihre Teilnahme!</b><br><br>
+
+        Ziel dieser Studie ist es, verhaltensbasiert zwischen gutartigem und bösartigem Neid zu unterscheiden. Aus
+        diesem Grund verknüpfen wir Ihr Antwortverhalten in dem soeben durchgeführten Spiel mit Ihren grundlegenden
+        Persönlichkeitseigenschaften (z.B. Ehrlichkeit-Bescheidenheit), Ihrem Neidempfinden und sozialen Präferenzen
+        aus der „Grunderhebung“ (der allerersten Online-Studie nach Ihrer Registrierung im Decision Lab Cologne). Wir
+        bitten Sie, diese Details unseres Forschungsprojekts innerhalb der nächsten vier Wochen nicht weiter zu
+        kommunizieren, da wir sonst mit verfälschten Studienergebnissen rechnen müssen!<br><br>
+
+        Vielen Dank für Ihre Unterstützung unserer Forschung!
+
+        <hr>
+    </p>
+
+    {% formfield 'comments' label="Wenn Sie uns Feedback geben möchten oder Kommentare zu dieser Studie haben, melden Sie uns diese gerne im Folgenden zurück:" %}
+
+    <br>
+
+    {% next_button %}
+
+{% endblock %}
+
+

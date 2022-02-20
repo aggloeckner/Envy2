@@ -1,0 +1,77 @@
+{{ block content }}
+
+	<p>
+		Vielen Dank. Bevor ausgelost wird, welche der beiden Optionen zum Tragen kommt, geben Sie bitte auf der
+		untenstehenden Skala an, wie gerne Sie die jeweilige Option umgesetzt sehen würden. <br><br>
+
+		<div class="slidecontainer">
+			{{ formfield_errors 'benignity_attractiveness' }}
+			<i>Option 1:</i> Sie entscheiden, wie viele Slider Sie zusätzlich ziehen. <br>
+			Diese Option würde ich <i>gar nicht gerne</i> &nbsp;
+			<input name="benignity_attractiveness" min="0" max="100" value="50" type="range" style="width:300px;"/>
+			&nbsp; <i>sehr gerne</i> umgesetzt sehen.
+		</div>
+		<br><br>
+
+		<div class="slidecontainer">
+			{{ formfield_errors 'maliciousness_attractiveness' }}
+			<i>Option 2:</i> Sie reduzieren den Gewinn von Spieler/in B. <br>
+			Diese Option würde ich <i>gar nicht gerne</i> &nbsp;
+			<input name="maliciousness_attractiveness" min="0" max="100" value="50" type="range" style="width:300px;"/>
+			&nbsp; <i>sehr gerne</i> umgesetzt sehen.
+		</div>
+	</p><br>
+
+    {{ next_button }}
+
+{{ endblock }}
+
+{{ block scripts }}
+
+	<script>
+
+		var nSliders = 0;
+		var sliderSolved;
+
+		function allSolved() {
+			for(i = 0; i < nSliders; i++) {
+				if( !sliderSolved[i] ) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function makeSliderListener(sli,sll,idx) {
+			var ret = function() {
+				sliderSolved[idx] = true;
+
+				if(allSolved()) {
+					$(".otree-btn-next").attr("disabled", false);
+				} else {
+					$(".otree-btn-next").attr("disabled", true);
+				}
+			};
+			return ret;
+		}
+
+		function initSlider(cntr) {
+			var slider_input = cntr.find("input");
+			var slider_label = cntr.find("span");
+			slider_input.on("input", makeSliderListener(slider_input, slider_label, nSliders) );
+			nSliders++;
+		}
+
+		function initAllSliders(){
+			$(".slidecontainer").each( function() { initSlider( $( this ) ); } );
+			$(".otree-btn-next").attr("disabled", true);
+			sliderSolved = new Array(nSliders);
+			for( i=0; i < nSliders; i++) {
+				sliderSolved[i] = false;
+			}
+		}
+
+		window.onload = initAllSliders;
+	</script>
+
+{{ endblock }}

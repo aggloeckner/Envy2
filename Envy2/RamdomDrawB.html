@@ -1,0 +1,24 @@
+
+{{ block content }}
+
+    <p>
+        Vielen Dank für Ihre Teilnahme bis hierhin. Im Folgenden informieren wir Sie über Ihre finale Auszahlung: <br><br>
+        {{ if player.group.benign_option }}
+            Die Zufallsziehung hat ergeben, dass Option 1 realisiert wird. <br><br>
+
+            Spieler/in A hat angegeben <b>{{ sliders_player_a }}</b> Schieberegler zusätzlich zu bearbeiten und damit
+            für sich selbst <b>{{ profit_player_a }}</b> hinzuverdienen. Damit erhalten Sie <b>5,- €</b> aus dieser
+            Interaktion und Spieler A <b>{{ results_player_a }}</b>.
+        {{ else }}
+            Die Zufallsziehung hat ergeben, dass Option 2 realisiert wird. <br><br>
+
+            Spieler/in A angegeben, dass Sie <b>{{ maliciousness_player_a }}</b> an die Versuchsleitung abgeben müssen.
+            Damit erhalten Sie <b>{{ results_player_b }}</b> aus dieser Interaktion und Spieler A <b>{{ results_player_a }}</b>.
+        {{ endif }}
+
+    </p><br><br>
+
+    {{ next_button }}
+{{ endblock }}
+
+

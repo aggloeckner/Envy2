@@ -1,0 +1,165 @@
+
+{{ block styles }}
+	<style>
+		.svo-value {
+			border: 1px solid black;
+			font-size: x-large;
+			margin-right: 20em;
+			width: 1.5em;
+			text-align: right;
+		}
+		.svo-button {
+			padding-left: 1em;
+			padding-right: 0.5em;
+		}
+
+		.svo-error-display {
+			display: none;
+    		text-align: center;
+    		padding: 30px;
+    		background-color: red;
+    		margin: 30px;
+    		border: 2px solid black
+		}
+	</style>
+{{ endblock }}
+
+{{ block content }}
+
+	<div class="svo-error-display">
+		Bitte beantworten Sie die fehlenden Fragen!
+	</div>
+
+	<table class="svotable">
+		{{ for svorow in SVO }}
+			<tr class="svo-top-row">
+				<th>Sie erhalten</th>
+				{{ for svoobject in svorow }}
+					<td rowspan="2" class="svo-button">
+						<input type="radio" value="{{ svoobject.0 }}" data-svo-ego="{{ svoobject.1 }}"
+							  data-svo-alter="{{ svoobject.2 }}" name="svo_row_{{ svoobject.0 }}">
+					</td>
+					<td class="svo-value"> {{ svoobject.1 }} </td>
+				{{ endfor }}
+			</tr>
+			<tr class="svo-bottom-row">
+				<th>Die andere Person erhält</th>
+				{{ for svoobject in svorow }} <td class="svo-value"> {{ svoobject.2 }} </td> {{ endfor }}
+			</tr>
+			<tr><td style="height: 40px;"></td>
+		{{ endfor }}
+	</table>
+
+	<input type="hidden" name="svo_choices_B" />
+	<input type="hidden" name="svo_tot_ego_B" />
+	<input type="hidden" name="svo_tot_alter_B" />
+	<input type="hidden" name="svo_mean_ego_B" />
+	<input type="hidden" name="svo_mean_alter_B" />
+	<input type="hidden" name="svo_ratio_B" />
+	<input type="hidden" name="svo_angle_B" />
+
+
+	<hr/><br/>
+
+    {{ next_button }}
+
+{{ endblock }}
+
+{{ block scripts }}
+	<script>
+		var nSvoItems 		= 0;
+		var svoTopRows 		= [];
+		var svoBottomRows 	= [];
+		var svoItemsChecked;
+
+		function makeRowChangeListener( idx ) {
+			var listener = function() {
+				svoItemsChecked[idx] = true;
+				svoTopRows[idx].find("th").css("background-color", "white");
+				svoBottomRows[idx].find("th").css("background-color", "white");
+			}
+			return listener;
+		}
+
+		function registerRowChangeListener(rw, inpt, idx) {
+			inpt.on( "change", makeRowChangeListener( idx ) );
+		}
+
+		function initSvoTopRow(rw) {
+			rw.find("input[type='radio']").each( function() { registerRowChangeListener(rw, $(this), nSvoItems ); } );
+			svoTopRows.push( rw );
+			nSvoItems++;
+		}
+
+		function initSvoBottomRow(rw) {
+			svoBottomRows.push( rw );
+		}
+
+		function allSvoChecked() {
+			for(i=0; i<nSvoItems; i++) {
+				if(!svoItemsChecked[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function checkSvo(event) {
+			if(!allSvoChecked()) {
+				event.preventDefault();
+				event.stopPropagation();
+				for( i=0; i < nSvoItems; i++ ) {
+					if(!svoItemsChecked[i]) {
+						svoTopRows[i].find("th").css("background-color", "red");
+						svoBottomRows[i].find("th").css("background-color", "red");
+					}
+				}
+				$(".svo-error-display").css("display","block");
+				$('html, body').animate({scrollTop: ($(".svo-error-display").first().offset().top)},500);
+			} else {
+				var res = [];
+				var tot_ego   = 0;
+				var tot_alter = 0;
+				var N = 0;
+				for(var i=0; i < nSvoItems; i++) {
+					var inpts = svoTopRows[i].find("input[type='radio']");
+					for( j=0; j < inpts.length; j++) {
+						if($( inpts[j] ).prop("checked")) {
+							res.push( $( inpts[j] ).data("svo-ego") + "/" + $( inpts[j] ).data("svo-alter"));
+							tot_ego   += parseInt( $( inpts[j] ).data("svo-ego") );
+							tot_alter += parseInt( $( inpts[j] ).data("svo-alter") );
+							N++;
+						}
+					}
+
+				}
+				var mean_ego = tot_ego / N;
+				var mean_alter = tot_alter / N;
+				var ratio = (mean_ego - 50) / (mean_alter - 50);
+				var angle = Math.atan( ratio ) * (180/Math.PI);
+
+				$("input[name='svo_choices_B']").val( res.join(" ") );
+				$("input[name='svo_tot_ego_B']").val( tot_ego );
+				$("input[name='svo_tot_alter_B']").val( tot_alter );
+				$("input[name='svo_mean_ego_B']").val( mean_ego );
+				$("input[name='svo_mean_alter_B']").val( mean_alter );
+				$("input[name='svo_ratio_B']").val( ratio );
+				$("input[name='svo_angle_B']").val( angle );
+
+			}
+		}
+
+		function initSvo() {
+			$(".svo-top-row").each( function() { initSvoTopRow( $( this ) ); } )
+			$(".svo-bottom-row").each( function() { initSvoBottomRow( $( this ) ); } )
+			svoItemsChecked = new Array(nSvoItems);
+			for( i=0; i < nSvoItems; i++ ) {
+				svoItemsChecked[i] = false;
+			}
+
+			$(".otree-btn-next").on("click", checkSvo )
+		}
+
+		window.onload = initSvo;
+	</script>
+{{ endblock }}

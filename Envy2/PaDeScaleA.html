@@ -1,0 +1,43 @@
+{{ block style }}
+
+    <style>
+        table,td {
+            width: 50px;
+            text-align: center;
+            vertical-align: bottom;
+        }
+    </style>
+
+{{ endblock }}
+
+{{ block content }}
+
+    <p>
+        Geben Sie bitte bei den folgenden Aussagen an, wie sehr diese jetzt in diesem Moment auf Sie zutreffen!
+    </p><br>
+
+    <table class="table">
+        <tr>
+            <td style="width: 600px"></td>
+            <td><i>gar nicht</i></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><i>sehr</i></td>
+        </tr>
+        {{ for field in form }}
+            <tr>
+                <td style="text-align: left">{{ field.label }}</td>
+                {{ for choice in field }}
+                    <td>{{ choice }}</td>
+                {{ endfor }}
+            </tr>
+        {{ endfor }}
+    </table>
+
+    {{ next_button }}
+{{ endblock }}
+
+
