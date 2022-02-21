@@ -1,0 +1,36 @@
+
+{{ block content }}
+
+    <p>
+        <b>Zum Ablauf:</b><br><br>
+
+        Die Interaktion gliedert sich in zwei Teile. Die folgende Graphik verdeutlicht den Ablauf:<br>
+
+	    <img src="{{ static 'graphics/InstruktionenGrafik.svg' }}"><br>
+
+        Zunächst werden Sie an einer Geschicklichkeitsaufgabe teilnehmen, bei der Sie innerhalb von 2 Minuten möglichst
+        viele Schieberegler an eine bestimmte Position ziehen müssen. Ihr Gegenüber erhält die gleiche Aufgabe. Pro 10
+        richtig platzierten Schiebereglern erhalten Sie ein Los in die Lostrommel, in der Ihre und die Lose Ihres
+        Gegenübers gesammelt werden. Nach Ablauf der zwei Minuten wird zufällig ein Los gezogen, das den/die Gewinner/in
+        bestimmt. Der/die <b>Gewinner/in erhält 5,- €</b>, die <b>andere Person lediglich 2,50 €</b>.<br><br>
+
+        Zusammenfassend ist die Wahrscheinlichkeit, dass eines Ihrer Lose gezogen wird, umso größer, je mehr
+        Schieberegler Sie im Vergleich zu Ihrem Gegenüber richtig ziehen. In dem Fall erhalten Sie die 5,- € und Ihr
+        Gegenüber die 2,50 €. Wird hingegen ein Los Ihres Gegenübers gezogen, erhalten Sie lediglich 2,50 € und Ihr
+        Gegenüber 5,- €.<br><br>
+
+        Im zweiten Teil der Aufgabe (siehe rechten Teil der Graphik) hat die Person, die lediglich 2,50 € erhalten hat,
+        dann die Möglichkeit, die Differenz in der Entlohnung zwischen sich und der anderen Person auszugleichen.
+        Hierfür gibt es zwei voneinander unabhängige Möglichkeiten, von denen eine am Ende <b><i>zufällig ausgewählt</i></b>
+        und <b><i>auszahlungswirksam umgesetzt</i></b> wird.<br><br>
+
+        <b>Option 1:</b> Zum einen kann sie sich zusätzlich bis zu 2,50 € hinzuverdienen, indem sie weitere
+        Schieberegler bearbeitet. Pro 10 richtig platzierte Schieberegler erhält sie dabei 10 Cent.<br><br>
+
+        <b>Option 2:</b> Zum anderen kann die Person, die lediglich 2,50 € erhalten hat, bestimmen, ob bzw. wie viel
+        Geld ihr Gegenüber von ihren 5,- € an die Versuchsleitung abgeben soll (zwischen 0,- € und 2,50 €).<br><br>
+    </p>
+
+    {{ next_button }}
+
+{{ endblock }}

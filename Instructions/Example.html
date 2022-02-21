@@ -1,0 +1,131 @@
+{{ block styles }}
+	<style>
+		dl.dl-horizontal {
+  			display: grid;
+  			grid-template-columns: max-content auto;
+		}
+
+		.dl-horizontal dt {
+			margin-right: 10px;
+		}
+	</style>
+
+	<style>
+		.slidecontainer {
+		  width: 50%; /* Width of the outside container */
+		  display: flex;
+		  flex-direction: row;
+		  margin-bottom: 2em;
+		}
+
+		.slidecontainer .label-left {
+			margin-right: 10px;
+		}
+
+		.slidecontainer .label-right {
+			margin-left: 10px;
+			width: 3em;
+		}
+
+		.RealEffortSliders {
+			display: flex;
+		}
+
+		.SliderColumn {
+			width: {{ column_width }}%;
+		}
+	</style>
+{{ endblock }}
+
+{{ block content }}
+
+    <p>
+        Zu Übungs- und Anschauungszwecken sehen Sie unten stehend zwei Test-Schieberegler abgebildet. Ihre Aufgabe ist
+        es mit der Maus den jeweiligen Schieberegler von der Startposition 0 auf die mittlere Position bei exakt 50 zu
+        ziehen.
+    </p>
+    <div class="RealEffortSliders">
+		<div class="SliderColumn">
+			<div class="slidecontainer" style="margin-left: 10px;">
+	  			<input type="range" min="0" max="100" value="0" class="slider" name="foo">
+	  			<span class="label-right">0</span>
+			</div>
+			<div class="slidecontainer" style="margin-left: 30px;">
+	  			<input type="range" min="0" max="100" value="0" class="slider" name="foo">
+	  			<span class="label-right">0</span>
+			</div>
+		</div>
+	</div>
+
+    <p>
+        Die folgende Anzahl an Schiebereglern haben bisherige Testpersonen innerhalb von 2 Minuten richtig positionieren können: <br>
+        <i>Platz 1:</i> <b>97</b><br>
+        <i>Platz 2:</i> <b>96</b><br>
+        <i>Platz 3:</i> <b>85</b><br>
+        <i>Platz 4:</i> <b>83</b><br>
+        <i>Platz 5:</i> <b>79</b><br><br>
+    </p>
+    <p>
+		Bitte klicken Sie auf <i>„Weiter“</i>. Ihnen wird im Folgenden eine andere Person als Gegenüber zugeordnet.
+        Im Anschluss können Sie mit der Aufgabe beginnen.<br><br>
+    </p>
+
+    {{ next_button }}
+
+{{ endblock }}
+
+{{ block scripts }}
+
+	<script>
+
+		var nSliders = 0;
+		var sliderSolved;
+
+		function allSolved() {
+			for(i = 0; i < nSliders; i++) {
+				if( !sliderSolved[i] ) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function makeSliderListener(sli,sll, idx) {
+			var ret = function() {
+				sll.text( sli.val() )
+				if(sli.val() == 50) {
+					sliderSolved[idx] = true;
+				} else {
+					sliderSolved[idx] = false;
+				}
+
+				if(allSolved()) {
+					$(".otree-btn-next").attr("disabled", false);
+				} else {
+					$(".otree-btn-next").attr("disabled", true);
+				}
+			};
+			return ret;
+		}
+
+		function initSlider(cntr) {
+			var slider_input = cntr.find("input");
+			var slider_label = cntr.find("span");
+			slider_input.on("input", makeSliderListener(slider_input, slider_label, nSliders) );
+			nSliders++;
+		}
+
+		function initAllSliders(){
+			$(".slidecontainer").each( function() { initSlider( $( this ) ); } );
+			$(".otree-btn-next").attr("disabled", true);
+			sliderSolved = new Array(nSliders);
+			for( i=0; i < nSliders; i++) {
+				sliderSolved[i] = false;
+			}
+			var ts = Math.round((new Date()).getTime() / 1000);
+			$('input[name="realEffortStart_A"]').val(ts);
+		}
+
+		window.onload = initAllSliders;
+	</script>
+{{ endblock }}

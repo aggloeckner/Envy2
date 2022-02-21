@@ -131,7 +131,7 @@ class PageBeforeTask(Page):
 class SliderTask(Page):
     form_model = 'player'
     form_fields = ['solvedSliders']
-    timeout_seconds = 12
+    timeout_seconds = 120
 
     def vars_for_template(player):
         num_columns = player.session.config['slider_columns']
@@ -145,11 +145,27 @@ class SliderTask(Page):
             'num_columns': num_columns,
             'num_sliders': num_sliders,
             'offsets': offsets,
-            'column_width': column_width}
+            'column_width': column_width
+        }
 
     def before_next_page(player, timeout_happened):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+class PageAfterTask(Page):
+    def before_next_page(player, timeout_happened):
+        import datetime
+        player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+    @staticmethod
+    def vars_for_template(player):
+        solved_sliders = player.solvedSliders
+        tickets = math.floor(player.solvedSliders / 10)
+
+        return dict(
+            solved_sliders = solved_sliders,
+            tickets = tickets
+        )
 
 class InstructionsWaitPage(WaitPage):
     after_all_players_arrive = 'assign_roles'
@@ -167,6 +183,11 @@ class InstructionsPlayerA(Page):
         return not player.winner
 
     def before_next_page(player, timeout_happened):
+        player.group.benign_option = random.choice([True,False])
+
+        if not player.group.benign_option:
+            player.get_others_in_group()[0].payoff -= player.maliciousness
+
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
@@ -194,10 +215,6 @@ class PaDeScaleA(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.group.benign_option = random.choice([True,False])
-
-        if not player.group.benign_option:
-            player.get_others_in_group()[0].payoff -= player.maliciousness
 
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
@@ -209,7 +226,7 @@ class RamdomDrawA(Page):
 
     @staticmethod
     def vars_for_template(player):
-        possible_benefit = cu(player.benignity / 10)
+        possible_benefit = cu(math.floor(player.benignity / 10)/10)
         number_sliders = player.benignity
         maliciousness = player.maliciousness
         results_player_b = player.get_others_in_group()[0].payoff
@@ -260,7 +277,7 @@ class AdditionalSlidersA(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        player.payoff += player.benignity / 10
+        player.payoff += math.floor(player.benignity / 10)/10
 
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
@@ -277,7 +294,7 @@ class SliderRatingA(Page):
 
     @staticmethod
     def vars_for_template(player):
-        possible_benefit = cu(player.benignity / 10)
+        possible_benefit = cu(math.floor(player.benignity / 10)/10)
         results_player_a = player.payoff
         results_player_b = player.get_others_in_group()[0].payoff
 
@@ -382,11 +399,11 @@ class RamdomDrawB(Page):
     @staticmethod
     def vars_for_template(player):
         sliders_player_a = player.get_others_in_group()[0].benignity
-        profit_player_a = cu(player.get_others_in_group()[0].benignity / 10)
+        profit_player_a = cu(math.floor(player.get_others_in_group()[0].benignity / 10) / 10)
         if player.group.benign_option:
-            results_player_a = 2.5 + cu(player.get_others_in_group()[0].benignity / 10)
+            results_player_a = cu(2.5 + player.get_others_in_group()[0].benignity / 10)
         else:
-            results_player_a = 2.5
+            results_player_a = cu(2.5)
         maliciousness_player_a = player.get_others_in_group()[0].maliciousness
         results_player_b = player.payoff
 
@@ -407,6 +424,7 @@ page_sequence = [
     GroupingWaitPage,
     PageBeforeTask,
     SliderTask,
+    PageAfterTask,
     InstructionsWaitPage,
     InstructionsPlayerA,
     AttractivenessRatingA,

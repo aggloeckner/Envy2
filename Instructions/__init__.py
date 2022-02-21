@@ -24,6 +24,16 @@ class Player(BasePlayer):
 
 # PAGES
 class Instructions(Page):
+    def before_next_page(player, timeout_happened):
+        import datetime
+        player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+class Instructions2(Page):
+    def before_next_page(player, timeout_happened):
+        import datetime
+        player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+class Example(Page):
     def vars_for_template(player):
         num_columns = player.session.config['slider_columns']
         column_width = math.floor(100 / num_columns)
@@ -37,5 +47,7 @@ class Instructions(Page):
 
 
 page_sequence = [
-    Instructions
+    Instructions,
+    Instructions2,
+    Example
 ]
