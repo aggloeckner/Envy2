@@ -135,7 +135,7 @@ class SliderTask(Page):
 
     def vars_for_template(player):
         num_columns = player.session.config['slider_columns']
-        column_width = math.floor(100 / num_columns)
+        column_width = math.floor(300 / num_columns)
         num_sliders = player.session.config['sliders_per_column']
         max_slider_offset = player.session.config['max_slider_offset']
 
@@ -253,7 +253,7 @@ class AdditionalSlidersA(Page):
     @staticmethod
     def vars_for_template(player):
         num_columns = player.session.config['slider_columns']
-        column_width = math.floor(100 / num_columns)
+        column_width = math.floor(300 / num_columns)
         num_sliders = math.ceil(player.benignity/num_columns)
         max_slider_offset = player.session.config['max_slider_offset']
 
@@ -401,7 +401,7 @@ class RamdomDrawB(Page):
         sliders_player_a = player.get_others_in_group()[0].benignity
         profit_player_a = cu(math.floor(player.get_others_in_group()[0].benignity / 10) / 10)
         if player.group.benign_option:
-            results_player_a = cu(2.5 + player.get_others_in_group()[0].benignity / 10)
+            results_player_a = cu(2.5 + math.floor(player.get_others_in_group()[0].benignity / 10) / 10)
         else:
             results_player_a = cu(2.5)
         maliciousness_player_a = player.get_others_in_group()[0].maliciousness
