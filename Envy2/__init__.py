@@ -124,10 +124,10 @@ def assign_roles(group):
 
     for p in players:
         if p.winner:
-            p.payoff = 5
+            p.payoff = 7
             p.participant.role = 'B'
         else:
-            p.payoff = 2.5
+            p.payoff = 4.5
             p.participant.role = 'A'
 
 # PAGES
