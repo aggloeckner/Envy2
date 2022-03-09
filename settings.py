@@ -40,7 +40,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc = ""
 )
 
-PARTICIPANT_FIELDS = [ 'time_start' , 'time_end']
+PARTICIPANT_FIELDS = [ 'time_start' , 'time_end' , 'role']
 SESSION_FIELDS = []
 
 # ISO-639 code

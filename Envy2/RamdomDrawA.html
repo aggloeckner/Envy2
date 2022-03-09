@@ -14,12 +14,16 @@
             Sie können die Schieberegler via Mausklick und Pfeiltasten positionieren.
         {{ elif player.group.benign_option }}
             Die Zufallsziehung hat ergeben, dass für Sie Option 1 realisiert wird. Sie haben sich dazu entschieden,
-            keine weiteren Schieberegler zu bearbeiten. Daher erhalten Sie 2,50 €, während Spieler/in B 5,- € erhält.
+            keine weiteren Schieberegler zu bearbeiten. Daher erhalten Sie 2,50 €, während Spieler/in B 5,- € erhält.<br><br>
+
+            Zusammen mit dem Pauschalbetrag von 2,- € beträgt ihre Auszahlung 4,50 € und die von Spieler/in B 7€.
         {{ else }}
             Die Zufallsauswahl hat ergeben, dass für Sie Option 2 realisiert wird. Das heißt, dass Spieler/in B
             {{ maliciousness }} an die Studienleitung zurückzahlen muss. <br><br>
 
-            Sie erhalten somit 2,50 € aus dieser Interaktion, während Spieler/in B {{ results_player_b }} erhält.
+            Sie erhalten somit 2,50 € aus dieser Interaktion, während Spieler/in B {{ results_player_b }} erhält.<br><br>
+
+            Zusammen mit dem Pauschalbetrag von 2,- € beträgt ihre Auszahlung 4,50 € und die von Spieler/in B {{ payoff_player_b }}.
         {{ endif }}
 
     </p><br><br>

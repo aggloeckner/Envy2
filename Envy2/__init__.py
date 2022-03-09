@@ -58,6 +58,25 @@ class Player(BasePlayer):
     svo_ratio_B = models.FloatField()
     svo_angle_B = models.FloatField()
 
+# ADMINPAGE
+def vars_for_admin_report(subsession):
+    with open('LabIds/CountParticipationA.txt', 'r') as file:
+        completions_a = int(file.read())
+
+    with open('LabIds/CountParticipationB.txt', 'r') as file:
+        completions_b = int(file.read())
+
+    completions = completions_a + completions_b
+
+    costs = sum([p.payoff for p in subsession.get_players()])
+
+    return dict(
+        completions = completions,
+        completions_a = completions_a,
+        completions_b = completions_b,
+        costs = costs
+    )
+
 # DEFS
 
 def group_by_arrival_time_method(player, waiting_players):
@@ -106,8 +125,10 @@ def assign_roles(group):
     for p in players:
         if p.winner:
             p.payoff = 5
+            p.participant.role = 'B'
         else:
             p.payoff = 2.5
+            p.participant.role = 'A'
 
 # PAGES
 
@@ -182,6 +203,12 @@ class InstructionsPlayerA(Page):
     def is_displayed(player):
         return not player.winner
 
+    @staticmethod
+    def error_message(player, values):
+        if math.fmod(values['benignity'], 10) > 0:
+            return 'Bitte geben Sie die Anzahl der Schieberegler in 10er Schritten an (z.B. "10", "130" oder "240").'
+
+    @staticmethod
     def before_next_page(player, timeout_happened):
         player.group.benign_option = random.choice([True,False])
 
@@ -229,13 +256,15 @@ class RamdomDrawA(Page):
         possible_benefit = cu(math.floor(player.benignity / 10)/10)
         number_sliders = player.benignity
         maliciousness = player.maliciousness
-        results_player_b = player.get_others_in_group()[0].payoff
+        results_player_b = cu(player.get_others_in_group()[0].payoff - 2)
+        payoff_player_b = player.get_others_in_group()[0].payoff
 
         return dict(
             possible_benefit = possible_benefit,
             number_sliders = number_sliders,
             maliciousness = maliciousness,
-            results_player_b = results_player_b
+            results_player_b = results_player_b,
+            payoff_player_b = payoff_player_b
         )
 
     def before_next_page(player, timeout_happened):
@@ -295,13 +324,17 @@ class SliderRatingA(Page):
     @staticmethod
     def vars_for_template(player):
         possible_benefit = cu(math.floor(player.benignity / 10)/10)
-        results_player_a = player.payoff
-        results_player_b = player.get_others_in_group()[0].payoff
+        results_player_a = cu(player.payoff - 2)
+        results_player_b = cu(player.get_others_in_group()[0].payoff - 2)
+        payoff_player_a = player.payoff
+        payoff_player_b = player.get_others_in_group()[0].payoff
 
         return dict(
             possible_benefit = possible_benefit,
             results_player_a = results_player_a,
-            results_player_b = results_player_b
+            results_player_b = results_player_b,
+            payoff_player_a = payoff_player_a,
+            payoff_player_b = payoff_player_b
         )
 
     def before_next_page(player, timeout_happened):
@@ -405,14 +438,19 @@ class RamdomDrawB(Page):
         else:
             results_player_a = cu(2.5)
         maliciousness_player_a = player.get_others_in_group()[0].maliciousness
-        results_player_b = player.payoff
+        results_player_b = cu(player.payoff - 2)
+        payoff_player_a = cu(results_player_a + 2)
+        payoff_player_b = player.payoff
 
         return dict(
             sliders_player_a = sliders_player_a,
             profit_player_a = profit_player_a,
             results_player_a = results_player_a,
             maliciousness_player_a = maliciousness_player_a,
-            results_player_b = results_player_b
+            results_player_b = results_player_b,
+            payoff_player_a = payoff_player_a,
+            payoff_player_b = payoff_player_b
+
         )
 
     def before_next_page(player, timeout_happened):

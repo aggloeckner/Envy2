@@ -66,14 +66,24 @@ class SeriousnessCheck(Page):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
-        with open('LabIds/CountParticipation.txt', 'r') as file:
+        with open('LabIds/CountParticipationA.txt', 'r') as file:
             txt = int(file.read())
             print(txt)
             txt += 1
             print(txt)
         if(player.participant.label != "1234555"):
-            if player.use_data:
-                with open('LabIds/CountParticipation.txt', 'w') as file:
+            if player.use_data and player.participant.role == 'A':
+                with open('LabIds/CountParticipationA.txt', 'w') as file:
+                    file.write(str(txt))
+
+        with open('LabIds/CountParticipationB.txt', 'r') as file:
+            txt = int(file.read())
+            print(txt)
+            txt += 1
+            print(txt)
+        if(player.participant.label != "1234555"):
+            if player.use_data and player.participant.role == 'B':
+                with open('LabIds/CountParticipationB.txt', 'w') as file:
                     file.write(str(txt))
 
 class Debriefing(Page):
