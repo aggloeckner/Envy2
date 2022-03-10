@@ -358,6 +358,11 @@ class ExpectationsPlayerB(Page):
     def is_displayed(player):
         return player.winner
 
+    @staticmethod
+    def error_message(player, values):
+        if math.fmod(values['expected_benignity'], 10) > 0:
+            return 'Bitte geben Sie die Anzahl der Schieberegler in 10er Schritten an (z.B. "10", "130" oder "240").'
+
     def before_next_page(player, timeout_happened):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
