@@ -20,7 +20,8 @@ SESSION_CONFIGS = [
         #    'Consent',
         #    'Instructions',
             'Envy2',
-            'SeriousnessCheck' ],
+            'SeriousnessCheck'
+        ],
         num_demo_participants = 2,
         sliders_per_column = 50,
         slider_columns = 3,
@@ -40,7 +41,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc = ""
 )
 
-PARTICIPANT_FIELDS = [ 'time_start' , 'time_end' , 'role']
+PARTICIPANT_FIELDS = [ 'time_start' , 'time_end' , 'role', 'wait_page_arrival' ]
 SESSION_FIELDS = []
 
 # ISO-639 code

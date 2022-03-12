@@ -45,6 +45,9 @@ class Example(Page):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
+        import time
+        player.participant.wait_page_arrival = time.time()
+
 
 page_sequence = [
     Instructions,

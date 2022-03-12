@@ -18,6 +18,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    time_out = models.BooleanField(initial = False)
     solvedSliders = models.IntegerField()
     winner = models.BooleanField()
     benignity = models.IntegerField(min = 0, max = 250)
@@ -101,6 +102,21 @@ def group_by_arrival_time_method(player, waiting_players):
 
         return [p1, p2]
 
+    for player in waiting_players:
+        if waiting_too_long_grouping(player):
+            player.time_out = True
+            return [player]
+
+def waiting_too_long(player):
+    participant = player.participant
+    import time
+    return time.time() - participant.wait_page_arrival > 360
+
+def waiting_too_long_grouping(player):
+    participant = player.participant
+    import time
+    return time.time() - participant.wait_page_arrival > 1200
+
 def assign_roles(group):
     players = group.get_players()
 
@@ -143,6 +159,10 @@ class GroupingWaitPage(WaitPage):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
+class GroupingTimeout(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.time_out
 
 class PageBeforeTask(Page):
     def before_next_page(player, timeout_happened):
@@ -178,6 +198,9 @@ class PageAfterTask(Page):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
+        import time
+        player.participant.wait_page_arrival = time.time()
+
     @staticmethod
     def vars_for_template(player):
         solved_sliders = player.solvedSliders
@@ -189,11 +212,23 @@ class PageAfterTask(Page):
         )
 
 class InstructionsWaitPage(WaitPage):
+    template_name = 'Envy2/InstructionsWaitPage.html'
     after_all_players_arrive = 'assign_roles'
 
     def before_next_page(player, timeout_happened):
         import datetime
         player.participant.time_end = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+    @staticmethod
+    def is_displayed(player):
+        if waiting_too_long(player):
+            player.time_out = True
+        return not player.time_out
+
+class SliderTaskTimeout(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.time_out
 
 class InstructionsPlayerA(Page):
     form_model = 'player'
@@ -465,10 +500,12 @@ class RamdomDrawB(Page):
 
 page_sequence = [
     GroupingWaitPage,
+    GroupingTimeout,
     PageBeforeTask,
     SliderTask,
     PageAfterTask,
     InstructionsWaitPage,
+    SliderTaskTimeout,
     InstructionsPlayerA,
     AttractivenessRatingA,
     PaDeScaleA,
