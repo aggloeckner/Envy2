@@ -145,6 +145,10 @@ def assign_roles(group):
         else:
             p.payoff = 4.5
             p.participant.role = 'A'
+        with open('LabIds/Participated.txt', 'a') as file:
+            if (p.participant.label != "1234555"):
+                file.write('\n')
+                file.write(p.participant.label)
 
 # PAGES
 
